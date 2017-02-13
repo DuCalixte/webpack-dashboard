@@ -14,6 +14,7 @@ function DashboardPlugin(options) {
     options = options || {};
     this.port = options.port || 9838;
     this.handler = options.handler || null;
+    this.logFormat = options.logFormat || {colors: true};
   }
 }
 
@@ -82,6 +83,7 @@ DashboardPlugin.prototype.apply = function(compiler) {
   });
 
   compiler.plugin("done", function(stats) {
+    var logFormat = this.logFormat;
     handler.call(null, [{
       type: "status",
       value: "Success"
@@ -100,7 +102,7 @@ DashboardPlugin.prototype.apply = function(compiler) {
       }
     }, {
       type: "log",
-      value: stats.toString({colors: true})
+      value: stats.toString(logFormat)
     }]);
   });
 
