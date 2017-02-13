@@ -14,7 +14,7 @@ function DashboardPlugin(options) {
     options = options || {};
     this.port = options.port || 9838;
     this.handler = options.handler || null;
-    this.logFormat = options.logFormat || {colors: true};
+    this.logFormat = options.stats || {colors: true};
   }
 }
 
@@ -34,6 +34,7 @@ function getTimeMessage(timer) {
 
 DashboardPlugin.prototype.apply = function(compiler) {
   var handler = this.handler;
+  var logFormat = this.logFormat;
   var timer;
 
   if (!handler) {
@@ -83,7 +84,6 @@ DashboardPlugin.prototype.apply = function(compiler) {
   });
 
   compiler.plugin("done", function(stats) {
-    var logFormat = this.logFormat;
     handler.call(null, [{
       type: "status",
       value: "Success"
@@ -115,7 +115,6 @@ DashboardPlugin.prototype.apply = function(compiler) {
       value: "idle" + getTimeMessage(timer)
     }]);
   });
-
-}
+};
 
 module.exports = DashboardPlugin;
