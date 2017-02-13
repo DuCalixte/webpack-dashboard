@@ -14,7 +14,7 @@ function DashboardPlugin(options) {
     options = options || {};
     this.port = options.port || 9838;
     this.handler = options.handler || null;
-    this.logFormat = options.stats || {colors: true};
+    this.logFormat = options.logFormat || {colors: true};
   }
 }
 
